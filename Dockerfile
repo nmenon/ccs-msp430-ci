@@ -83,7 +83,12 @@ RUN cd /ccs_install \
 ENV PATH="/opt/ti/ccs/eclipse:${PATH}"
 
 # workspace folder for CCS
-RUN mkdir /workspace
+RUN mkdir -p /workspace /workdir && groupadd -r user -g $USER_UID && \
+useradd -u 1000 -r -g user -d /workdir -s /bin/bash -c "Docker user" user && \
+chown -R user:user /workspace /workdir
+
+USER swuser
+VOLUME /workspace
 
 # directory for the ccs project
 VOLUME /workdir
