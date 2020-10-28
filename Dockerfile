@@ -82,7 +82,8 @@ RUN cd /ccs_install \
 
 ENV PATH="/opt/ti/ccs/eclipse:${PATH}"
 
-RUN apt install libgtk-3-dev
+RUN  export DEBIAN_FRONTEND=noninteractive;apt-get update;\
+			    apt-get install -y libgtk-3-dev build-essential
 # workspace folder for CCS
 RUN mkdir -p /workspace /workdir && groupadd -r user -g 1000 && \
 useradd -u 1000 -r -g user -d /workdir -s /bin/bash -c "Docker user" user && \
