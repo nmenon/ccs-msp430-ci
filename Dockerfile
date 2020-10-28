@@ -46,10 +46,9 @@ RUN export JAVA_TOOL_OPTIONS=-Xss1280k
 ENV PATH="/scripts:${PATH}"
 
 
-# This is stored on our private server as TI requires authentication and LFS is not supported on docker with github
-RUN wget -q https://roomzproduction.blob.core.windows.net/tools/simplelink_cc32xx_sdk_4_30_00_06.run \
-    && chmod 777 /ccs_install/simplelink_cc32xx_sdk_4_30_00_06.run \
-    && /ccs_install/simplelink_cc32xx_sdk_4_30_00_06.run --mode unattended \
+RUN wget -q -O /ccs_install/simplelink.run http://software-dl.ti.com/simplelink/esd/simplelink_msp432_sdk/1.40.01.00/simplelink_msp432_sdk_1_40_01_00.run \
+    && chmod 777 /ccs_install/simplelink.run \
+    && /ccs_install/simplelink.run --mode unattended \
     && rm -rf /ccs_install/
 
 # Download and install CCS
