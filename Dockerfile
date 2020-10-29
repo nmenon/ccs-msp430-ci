@@ -57,6 +57,23 @@ RUN curl -L https://software-dl.ti.com/ccs/esd/CCSv10/CCS_10_1_1/exports/CCS10.1
     && /ccs_install/ccs_setup_10.1.1.00004.run --mode unattended --prefix /opt/ti --enable-components PF_MSP430,PF_MSP432,PF_CC3X \
     && rm -rf /ccs_install/
 
+#Install latest compiler
+RUN cd /ccs_install \
+    && wget -q https://software-dl.ti.com/codegen/esd/cgt_public_sw/TMS470/20.2.2.LTS/ti_cgt_tms470_20.2.2.LTS_linux_installer_x86.bin \
+    && chmod 777 /ccs_install/ti_cgt_tms470_20.2.2.LTS_linux_installer_x86.bin \
+    && ls -l /ccs_install \
+    && /ccs_install/ti_cgt_tms470_20.2.2.LTS_linux_installer_x86.bin --prefix /opt/ti --unattendedmodeui minimal \
+    && rm -rf /ccs_install/
+
+
+
+RUN cd /ccs_install \
+    && wget -q https://software-dl.ti.com/codegen/esd/cgt_public_sw/MSP430/20.2.2.LTS/ti_cgt_msp430_20.2.2.LTS_linux_installer_x86.bin \
+    && chmod 777 /ccs_install/ti_cgt_msp430_20.2.2.LTS_linux_installer_x86.bin \
+    && ls -l /ccs_install \
+    && /ccs_install/ti_cgt_msp430_20.2.2.LTS_linux_installer_x86.bin --prefix /opt/ti --unattendedmodeui minimal \
+    && rm -rf /ccs_install/
+
 # workspace folder for CCS
 RUN mkdir -p /workspace /workdir /automation_iface && groupadd -r user -g 1000 && \
 useradd -u 1000 -r -g user -d /workdir -s /bin/bash -c "Docker user" user && \
@@ -64,11 +81,6 @@ chown -R user:user /workspace /workdir /automation_iface
 
 USER user
 
-ENV PATH="/opt/ti/ccs/eclipse:${PATH}"
-# Pre compile libraries needed for the msp to avoid 6min compile during each build
-ENV PATH="${PATH}:/opt/ti/ccs/tools/compiler/ti-cgt-arm_20.2.1.LTS/bin:/opt/ti/ccs/tools/compiler/ti-cgt-msp430_20.2.1.LTS/bin"
-#RUN /opt/ti/ccs/tools/compiler/ti-cgt-arm_20.2.0.LTS/lib/mklib --pattern=rts430x_sc_sd_eabi.lib
-# directory for the ccs workspace
 VOLUME /workspace
 
 # directory for the automation interface source.
@@ -78,5 +90,10 @@ VOLUME /workspace
 VOLUME /workdir
 WORKDIR /workdir
 
+ENV PATH="/opt/ti/ccs/eclipse:${PATH}"
+# Pre compile libraries needed for the msp to avoid 6min compile during each build
+ENV PATH="${PATH}:/opt/ti/ccs/tools/compiler/ti-cgt-arm_20.2.1.LTS/bin:/opt/ti/ccs/tools/compiler/ti-cgt-msp430_20.2.1.LTS/bin"
+#RUN /opt/ti/ccs/tools/compiler/ti-cgt-arm_20.2.0.LTS/lib/mklib --pattern=rts430x_sc_sd_eabi.lib
+# directory for the ccs workspace
 # if needed
 #ENTRYPOINT []
