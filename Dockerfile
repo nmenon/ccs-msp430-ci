@@ -54,7 +54,7 @@ RUN wget -q -O /ccs_install/simplelink.run http://software-dl.ti.com/simplelink/
 
 # Install CCS
 RUN curl -L https://software-dl.ti.com/ccs/esd/CCSv10/CCS_10_1_1/exports/CCS10.1.1.00004_linux-x64.tar.gz | tar xvz --strip-components=1 -C /ccs_install \
-    && /ccs_install/ccs_setup_10.1.1.00004.run --mode unattended --prefix /opt/ti --enable-components PF_MSP432,PF_MSP430 \
+    && /ccs_install/ccs_setup_10.1.1.00004.run --mode unattended --prefix /opt/ti --enable-components PF_MSP430,PF_MSP432,PF_CC3X \
     && rm -rf /ccs_install/
 
 # workspace folder for CCS
