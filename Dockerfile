@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-LABEL maintainer="Nishanth Menon <nm@ti.com>
+LABEL maintainer="Nishanth Menon <nm@ti.com>"
 
 #Install all packages needed
 # https://software-dl.ti.com/ccs/esd/documents/ccsv10_linux_host_support.html
