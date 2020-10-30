@@ -5,7 +5,7 @@ LABEL maintainer="Nishanth Menon <nm@ti.com>"
 # In case of Proxy based environment, leave the following enabled.
 # in Direct internet cases, comment out the following two lines.
 #--- PROXY SETUP START
-COPY proxy-configuration/ /
+# COPY proxy-configuration/ /
 #--- END START
 
 #Install all packages needed
