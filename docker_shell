@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Use Directly from Docker hub if not provided:
+IMG_NAME="${IMG_NAME:-nishanthmenon/ccs-msp430-ci}"
+
+if [ -f '${HOME}/.Xauthority' ]; then
+	setfacl -m user:1000:r ${HOME}/.Xauthority
+fi
+
+D=`echo "$(cd "$(dirname "$0")"; pwd -P)/"`
+set -x
+docker run -it --rm -e DISPLAY					\
+	       -v $D/workdir:/workdir				\
+	       -v $D/workspace:/workspace			\
+	       -v $D:/automation_iface				\
+	       -v ${HOME}/.Xauthority:/workdir/.Xauthority	\
+	       -e http_proxy -e https_proxy 			\
+	       --net=host					\
+	       ${IMG_NAME}					\
+	       /bin/bash $*

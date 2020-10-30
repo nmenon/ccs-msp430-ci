@@ -2,6 +2,12 @@ FROM ubuntu:18.04
 
 LABEL maintainer="Nishanth Menon <nm@ti.com>"
 
+# In case of Proxy based environment, leave the following enabled.
+# in Direct internet cases, comment out the following two lines.
+#--- PROXY SETUP START
+COPY proxy-configuration/ /
+#--- END START
+
 #Install all packages needed
 # https://software-dl.ti.com/ccs/esd/documents/ccsv10_linux_host_support.html
 RUN export DEBIAN_FRONTEND=noninteractive; dpkg --add-architecture i386 \
@@ -80,8 +86,6 @@ useradd -u 1000 -r -g user -d /workdir -s /bin/bash -c "Docker user" user && \
 chown -R user:user /workspace /workdir /automation_iface
 
 USER user
-
-VOLUME /workspace
 
 # directory for the automation interface source.
 VOLUME /workspace
